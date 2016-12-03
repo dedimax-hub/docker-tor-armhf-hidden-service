@@ -1,4 +1,5 @@
-FROM    alpine
+#FROM    alpine
+FROM	container4armhf/armhf-alpine
 
 ENV     HOME /var/lib/tor
 
