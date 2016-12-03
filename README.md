@@ -1,3 +1,7 @@
+# Fork
+
+This fork replaced the alpine base image with container4armhf/armhf-alpine. It builds successfully (though slowly) on a Raspberry Pi 3.
+
 # docker-tor-hidden-service
 
 Create a tor hidden service with a link
