@@ -45,10 +45,11 @@ class Setup(object):
         self._add_host(host)
         if 'ports' not in self.setup[host]:
             self.setup[host]['ports'] = []
-        port = [int(p) for p in ports.split(':')]
-        assert len(port) == 2
-        if port not in self.setup[host]['ports']:
-            self.setup[host]['ports'].append(port)
+        ports_l = [[int(v) for v in sp.split(':')] for sp in ports.split(',')]
+        for port in ports_l:
+            assert len(port) == 2
+            if port not in self.setup[host]['ports']:
+                self.setup[host]['ports'].append(port)
 
     def _get_ip(self):
         for host in self.setup:
@@ -97,7 +98,6 @@ class Setup(object):
                     os.fchmod(f.fileno(), 0o600)
                 with open(os.path.join(serv_dir, 'hostname'), 'w') as f:
                     f.write(self.onion_url_gen(conf['key']))
-
 
     def _set_conf(self):
         env = Environment(loader=FileSystemLoader('/'))
