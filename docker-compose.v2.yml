@@ -4,7 +4,7 @@ version: "2"
 
 services:
   tor:
-    image: goldy/tor-hidden-service
+    image: dedimax/docker-tor-armhf-hidden-service
     build: .
     links:
       - hello
@@ -37,11 +37,11 @@ services:
       - tor-keys:/var/lib/tor/hidden_service/
 
   hello:
-    image: tutum/hello-world
+    image: docker pull hypriot/armhf-hello-world
     hostname: hello
 
   world:
-    image: tutum/hello-world
+    image: docker pull hypriot/armhf-hello-world
     hostname: world
 
 volumes:
