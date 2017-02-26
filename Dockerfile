@@ -3,11 +3,11 @@ FROM	container4armhf/armhf-alpine
 
 ENV     HOME /var/lib/tor
 
-RUN     apk add --no-cache git libevent-dev openssl-dev gcc make automake ca-certificates autoconf musl-dev && \
+RUN     apk add --no-cache git libevent-dev openssl-dev gcc make automake ca-certificates autoconf musl-dev coreutils && \
         mkdir -p /usr/local/src/ && \
         git clone https://git.torproject.org/tor.git /usr/local/src/tor && \
         cd /usr/local/src/tor && \
-        git checkout $(git tag | tail -1) && \
+        git checkout $(git branch -a | grep 'release' | sort -V | tail -1) && \
         ./autogen.sh && \
         ./configure \
             --disable-asciidoc \
@@ -20,7 +20,7 @@ RUN     apk add --no-cache git libevent-dev openssl-dev gcc make automake ca-cer
         python3 -m ensurepip && \
         rm -r /usr/lib/python*/ensurepip && \
         pip3 install --upgrade pip setuptools pycrypto && \
-        apk del git libevent-dev openssl-dev make automake python3-dev gcc autoconf musl-dev && \
+        apk del git libevent-dev openssl-dev make automake python3-dev gcc autoconf musl-dev coreutils && \
         apk add --no-cache libevent openssl
 
 ADD     assets/entrypoint-config.yml /
@@ -29,7 +29,7 @@ ADD     assets/torrc /var/local/tor/torrc.tpl
 
 RUN     mkdir -p /etc/tor/
 
-RUN     pip install pyentrypoint==0.3.8
+RUN     pip install pyentrypoint==0.5.0
 
 RUN     cd /usr/local/src/onions && python3 setup.py install
 

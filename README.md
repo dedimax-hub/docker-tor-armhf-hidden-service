@@ -61,8 +61,6 @@ Options are set using the following pattern: `LINKNAME_KEY`
 
 ### Setup port
 
-__DEPECATED:__
-By default, ports are the same as linked containers, but a default port can be mapped using `PORT_MAP` environment variable.
 
 __Caution__: Using `PORT_MAP` with multiple ports on single service will cause `tor` to fail.
 
@@ -78,9 +76,13 @@ environment:
     # Set mapping ports
     HELLO_PORTS: 80:80
 
-    WORLD_PORTS: 8000:80
+    # Multiple ports can be coma separated
+    WORLD_PORTS: 8000:80,8888:80,22:22
 
 ```
+
+__DEPECATED:__
+By default, ports are the same as linked containers, but a default port can be mapped using `PORT_MAP` environment variable.
 
 ### Compose v2 support
 
@@ -100,6 +102,12 @@ world: b2sflntvdne63amj.onion:80
 $ docker exec -ti torhiddenproxy_tor_1 onions --json
 {"hello": ["b2sflntvdne63amj.onion:80"], "world": ["vegm3d7q64gutl75.onion:80"]}
 ```
+
+### Auto reload
+
+Changing `/etc/tor/torrc` file trigger a `SIGHUP` signal to `tor` to reload configuration.
+
+To disable this behavior, add `ENTRYPOINT_DISABLE_RELOAD` in environment.
 
 
 ### pyentrypoint
