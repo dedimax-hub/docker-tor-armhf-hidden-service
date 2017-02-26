@@ -1,7 +1,7 @@
 # docker-compose.yml example
 
 tor:
-  image: dedimax/docker-tor-hidden-service
+  image: dedimax/docker-tor-armhf-hidden-service
   links:
     - hello
     - world
