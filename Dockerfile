@@ -1,4 +1,5 @@
-FROM	container4armhf/armhf-alpine
+FROM    container4armhf/armhf-alpine
+LABEL   architecture="ARMv7"
 
 ENV     HOME /var/lib/tor
 
